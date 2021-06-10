@@ -10,7 +10,6 @@ class FileApp extends StatefulWidget {
 }
 
 class _FileApp extends State<FileApp> {
-  int _count = 0;
   List<String> itemList = [];
   TextEditingController _textEditingController = TextEditingController();
 
@@ -42,6 +41,13 @@ class _FileApp extends State<FileApp> {
       }
       return itemList;
     }
+  }
+
+  void writeFruit(String fruit) async {
+    var dir = await getApplicationDocumentsDirectory();
+    var file = await File('${dir.path}/fruit.txt').readAsString();
+    file = file + '\n$fruit';
+    File('${dir.path}/fruit.txt').writeAsStringSync(file);
   }
 
   @override
