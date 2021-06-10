@@ -66,25 +66,29 @@ class _FileApp extends State<FileApp> {
       ),
       body: Container(
         child: Center(
-          child: Column(children: [
-            TextField(
-              controller: _textEditingController,
-              keyboardType: TextInputType.text,
-            ),
-            ListView.builder(
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Center(
-                    child: Text(
-                      itemList[index],
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ),
-                );
-              },
-              itemCount: itemList.length,
-            ),
-          ]),
+          child: Column(
+            children: [
+              TextField(
+                controller: _textEditingController,
+                keyboardType: TextInputType.text,
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Center(
+                        child: Text(
+                          itemList[index],
+                          style: TextStyle(fontSize: 30),
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: itemList.length,
+                ),
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
