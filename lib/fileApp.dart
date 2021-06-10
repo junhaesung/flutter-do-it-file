@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FileApp extends StatefulWidget {
   @override
@@ -11,6 +11,35 @@ class FileApp extends StatefulWidget {
 
 class _FileApp extends State<FileApp> {
   int _count = 0;
+  
+  Future<List<String>> readListFile() async {
+    List<String> itemList = [];
+    var key = 'first';
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    bool firstCheck = pref.getBool(key) ?? false;
+    var dir = await getApplicationDocumentsDirectory();
+    bool doesFileExist = await File('${dir.path}/fruit.txt').exists();
+
+    if (firstCheck == false || doesFileExist == false) {
+      pref.setBool(key, true);
+      var file = await DefaultAssetBundle.of(context).loadString('repo/fruit.txt');
+      File('${dir.path}/fruit.txt').writeAsStringSync(file);
+      var array = file.split('\n');
+      for (var item in array) {
+        print(item);
+        itemList.add(item);
+      }
+      return itemList;
+    } else {
+      var file = await File('${dir.path}/fruit.txt').readAsString();
+      var array = file.split('\n');
+      for (var item in array) {
+        print(item);
+        itemList.add(item);
+      }
+      return itemList;
+    }
+  }
 
   @override
   void initState() {
