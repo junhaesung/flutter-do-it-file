@@ -53,7 +53,6 @@ class _FileApp extends State<FileApp> {
   @override
   void initState() {
     super.initState();
-    readCountFile();
     initData();
   }
 
@@ -107,23 +106,5 @@ class _FileApp extends State<FileApp> {
         child: Icon(Icons.add),
       ),
     );
-  }
-
-  void writeCountFile(int count) async {
-    var dir = await getApplicationDocumentsDirectory();
-    File('${dir.path}/count.txt').writeAsStringSync(count.toString());
-  }
-
-  void readCountFile() async {
-    try {
-      var dir = await getApplicationDocumentsDirectory();
-      var file = await File(dir.path + '/count.txt').readAsString();
-      print(file);
-      setState(() {
-        _count = int.parse(file);
-      });
-    } catch (e) {
-      print(e.toString());
-    }
   }
 }
