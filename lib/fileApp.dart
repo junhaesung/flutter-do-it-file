@@ -24,7 +24,23 @@ class _FileApp extends State<FileApp> {
       appBar: AppBar(
         title: Text('File Example'),
       ),
-      body: Container(),
+      body: Container(
+        child: Center(
+          child: Text(
+            '$_count',
+            style: TextStyle(fontSize: 40),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _count++;
+          });
+          writeCountFile(_count);
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 
