@@ -13,7 +13,7 @@ class _FileApp extends State<FileApp> {
   int _count = 0;
   List<String> itemList = [];
   TextEditingController _textEditingController = TextEditingController();
-  
+
   Future<List<String>> readListFile() async {
     List<String> itemList = [];
     var key = 'first';
@@ -24,7 +24,8 @@ class _FileApp extends State<FileApp> {
 
     if (firstCheck == false || doesFileExist == false) {
       pref.setBool(key, true);
-      var file = await DefaultAssetBundle.of(context).loadString('repo/fruit.txt');
+      var file =
+          await DefaultAssetBundle.of(context).loadString('repo/fruit.txt');
       File('${dir.path}/fruit.txt').writeAsStringSync(file);
       var array = file.split('\n');
       for (var item in array) {
@@ -65,19 +66,29 @@ class _FileApp extends State<FileApp> {
       ),
       body: Container(
         child: Center(
-          child: Text(
-            '$_count',
-            style: TextStyle(fontSize: 40),
-          ),
+          child: Column(children: [
+            TextField(
+              controller: _textEditingController,
+              keyboardType: TextInputType.text,
+            ),
+            ListView.builder(
+              itemBuilder: (context, index) {
+                return Card(
+                  child: Center(
+                    child: Text(
+                      itemList[index],
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  ),
+                );
+              },
+              itemCount: itemList.length,
+            ),
+          ]),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _count++;
-          });
-          writeCountFile(_count);
-        },
+        onPressed: () {},
         child: Icon(Icons.add),
       ),
     );
